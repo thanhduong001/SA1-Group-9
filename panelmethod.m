@@ -18,7 +18,7 @@ for k = [1:1:nv]
         for j = [1:1:ny]
             xm(i,j) = xmin + (i-1)*(xmax-xmin)/(nx-1);
             ym(i,j) = ymin + (j-1)*(ymax-ymin)/(ny-1);
-            psi(i,j) = psi(i,j) + psipv(k*del/nv,0,Gamma(k),xm(i,j),ym(i,j));
+            psi(i,j) = psi(i,j) + psipv((k-0.5)*del/nv,0,Gamma(k),xm(i,j),ym(i,j));
         end
     end
 end
