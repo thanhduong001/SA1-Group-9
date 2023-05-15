@@ -1,5 +1,6 @@
 clear
 close all
+clc
 
 xc = 0.75;
 yc = 0.5;

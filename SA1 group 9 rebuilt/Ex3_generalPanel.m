@@ -1,5 +1,6 @@
 clear
 close all
+clc
 
 nx = 51;
 ny = 41;
