@@ -19,7 +19,7 @@ for i = 1:1:np-1
 end
 for i = 1:1:np-1
     for j = 1:1:np
-        if j == 1:
+        if j == 1
             psi(i,j) = INFL(i,j, 1)
         elseif j == np+1
             psi(i,j) = INFL(i,j, 1) + INFL(i,j-1, 2)
