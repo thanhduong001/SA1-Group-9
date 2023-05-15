@@ -1,12 +1,4 @@
-function [xm, ym] = buildSpace()
-    nx = 51;
-    ny = 41;
-    
-    xmax = 2.5;
-    xmin = -2.5;
-    ymax = 2;
-    ymin = -2;
-    
+function [xm, ym] = buildSpace(xmax, xmin, ymax, ymin, nx, ny)
     for i = 1:1:nx
         for j = 1:1:ny
             xm(i,j) = xmin + (i-1)*(xmax-xmin)/(nx-1);

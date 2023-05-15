@@ -8,13 +8,13 @@ del = 1.5;
 nx = 51;
 ny = 41;
 
-ga = 0;
-gb = 1;
+ga = 1;
+gb = 0;
 nv = 100;
 step = (gb-ga)/(nv);
 Gamma = linspace(ga+step/2, gb-step/2, nv-1) * del/nv;
 
-[xm, ym] = buildSpace();
+[xm, ym] = buildSpace(-2.5,2.5,-2,2,51,41);
 
 psi = zeros(nx, ny);
 for s = 1:1:nv-1
