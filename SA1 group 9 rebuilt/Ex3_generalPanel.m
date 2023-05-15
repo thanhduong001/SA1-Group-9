@@ -14,7 +14,7 @@ dir = [xa-xb, ya-yb];
 del = norm(dir);
 
 ga = 1;
-gb = 0;
+gb = 1;
 nv = 100;
 
 g_step = (gb-ga)/nv;
@@ -26,6 +26,7 @@ xc = linspace(xa+x_step/2, xb-x_step/2, nv-1);
 yc = linspace(ya+y_step/2, yb-y_step/2, nv-1);
 
 [infa, infb] = panelinf(xa, ya, xb, yb, xm, ym);
+psi_inf = infa * ga + infb * gb;
 
 psi = zeros(nx, ny);
 for k = [1:1:nv-1]
@@ -34,8 +35,14 @@ end
 
 c = -0.15:0.05:0.15;
 figure(1)
+title('Streamfunction')
 contour(xm,ym,psi,c)
 figure(2)
+title('Influence a')
 contour(xm,ym,infa,c)
 figure(3)
+title('Influence b')
 contour(xm,ym,infb,c)
+figure(4)
+title('Streamfunction by influences')
+contour(xm,ym,psi_inf,c)
