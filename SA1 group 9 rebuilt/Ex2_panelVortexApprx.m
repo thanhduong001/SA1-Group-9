@@ -11,7 +11,7 @@ ny = 41;
 ga = 1;
 gb = 0;
 nv = 100;
-step = (gb-ga)/(nv);
+step = (gb-ga)/nv;
 Gamma = linspace(ga+step/2, gb-step/2, nv-1) * del/nv;
 
 [xm, ym] = buildSpace(-2.5,2.5,-2,2,51,41);
