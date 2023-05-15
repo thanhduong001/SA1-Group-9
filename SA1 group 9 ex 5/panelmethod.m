@@ -22,6 +22,8 @@ for k = [1:1:nv]
         end
     end
 end
+step = (gb-ga)/(nv);
+Gamma2 = linspace(ga+step/2, gb-step/2, nv-1);
 c = -0.15:0.05:0.15;
 contour(xm,ym,psi,c)
           

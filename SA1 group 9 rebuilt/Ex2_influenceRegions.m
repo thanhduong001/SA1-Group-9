@@ -11,7 +11,10 @@ psi = psipv(xc,yc,Gamma,xm,ym);
 [infa, infb] = refpaninf(del,xm,ym);
 
 c = -0.15:0.05:0.15;
-figure('Influence of left vortex')
+figure(1)
+title('Influence of left vortex')
 contour(xm,ym,infa,c)
-figure('Infleunce of right vortex')
+
+figure(2)
+title('Influence of right vortex')
 contour(xm,ym,infb,c)
