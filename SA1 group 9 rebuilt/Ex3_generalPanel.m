@@ -14,7 +14,7 @@ dir = [xa-xb, ya-yb];
 del = norm(dir);
 
 ga = 1;
-gb = 0;
+gb = 1;
 nv = 100;
 
 g_step = (gb-ga)/nv;
@@ -34,8 +34,11 @@ end
 
 c = -0.15:0.05:0.15;
 figure(1)
+title('Streamfunction')
 contour(xm,ym,psi,c)
 figure(2)
+title('Influence a')
 contour(xm,ym,infa,c)
 figure(3)
+title('Influence b')
 contour(xm,ym,infb,c)

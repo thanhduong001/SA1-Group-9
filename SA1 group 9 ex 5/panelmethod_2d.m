@@ -5,10 +5,10 @@ nx = 51;
 ny = 41;
 nv = 100;
 
-xmax = 2.5;
-xmin = -2.5;
-ymax = 2;
-ymin = -2;
+xmax = 0;
+xmin = 5;
+ymax = 0;
+ymin = 4;
 
 xa = 4.1;
 xb = 2.2;

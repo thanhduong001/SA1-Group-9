@@ -13,7 +13,7 @@ function [infa, infb] = panelinf(xa, ya, xb, yb, xm, ym)
     Xm = zeros(dim1, dim2);
     for i = 1:1:dim1
         for j = 1:1:dim2
-            rij = [xm(i, j) ym(i, j)];
+            rij = [xm(i, j)-xa ym(i, j)-ya];
             Xm(i,j) = dot(rij, t);
             Ym(i,j) = dot(rij, n);
         end
