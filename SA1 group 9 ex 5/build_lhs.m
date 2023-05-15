@@ -44,13 +44,30 @@ for i = 1:1:np-1
         end
     end
 end
-
+%{
 lhsmat = zeros(np+1,np+1);
 for i = [1:1:np-1]
     for j = [1:1:np+1]
         lhsmat(i,j)  = psip(i+1,j) - psip(i,j);
     end
 end
+%}
+%{
+lhsmat = zeros(np+1,np+1);
+for i = [2:1:np-1]
+    for j = [1:1:np+1]
+        lhsmat(i,j)  = psip(i+1,j) - psip(i,j);
+    end
+end
+%}
+
+lhsmat = zeros(np+1,np+1);
+for i = [1:1:np-1]
+    for j = [2:1:np]
+        lhsmat(i,j)  = psip(i+1,j) - psip(i,j);
+    end
+end
+
 
 lhsmat(np,1) = 1;
 lhsmat(np+1, np+1) = 1;

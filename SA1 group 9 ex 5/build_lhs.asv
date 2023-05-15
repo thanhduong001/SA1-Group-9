@@ -25,11 +25,12 @@ for i = 1:1:np-1
         INFL(i,j, 2) = infb;
     end
 end
-figure(3)
+figure(5)
 for i = [1:1:np]
     k(i) = i;
 end
-plot(k, Gamma)
+
+%plot(k, INFL(1,k,1))
 
 for i = 1:1:np-1
     for j = 1:1:np+1
@@ -50,6 +51,23 @@ for i = [1:1:np-1]
         lhsmat(i,j)  = psip(i+1,j) - psip(i,j);
     end
 end
+%{
+lhsmat = zeros(np+1,np+1);
+for i = [2:1:np]
+    for j = [1:1:np+1]
+        lhsmat(i,j)  = psip(i+1,j) - psip(i,j);
+    end
+end
+%}
+%{
+lhsmat = zeros(np+1,np+1);
+for i = [1:1:np-1]
+    for j = [1:1:np+1]
+        lhsmat(i,j)  = psip(i+1,j) - psip(i,j);
+    end
+end
+%}
+
 lhsmat(np,1) = 1;
 lhsmat(np+1, np+1) = 1;
 
