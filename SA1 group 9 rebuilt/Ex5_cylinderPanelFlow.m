@@ -13,9 +13,6 @@ theta(np+1) = theta(1);
 xs = cos(theta);
 ys = sin(theta);
 
-Xs = repmat(xs,1,np);
-Ys = repmat(ys,1,np);
-
 alpha = 0;
 A = build_lhs(xs,ys);
 b = build_rhs(xs,ys,alpha);
