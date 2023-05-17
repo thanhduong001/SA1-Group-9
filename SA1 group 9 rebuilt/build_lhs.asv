@@ -1,50 +1,53 @@
 function lhsmat = build_lhs(xs,ys)
-np = length(xs) - 1;
-
-nx = 51;
-ny = 41;
-[xm, ym] = buildSpace(-2.5,2.5,-2,2,nx,ny);
-
+np = length(xs);
+Xs = repmat(xs,np,1);
+Ys = repmat(ys.',1,np);
 g = -2*ys;
-for k = 1:1:np
-    [infa, infb] = panelinf(xs(k), ys(k), xs(k+1), ys(k+1), xm, ym);
+
+INFA = zeros(np+1,np+1);
+INFB = zeros(np+1,np+1);
+for k = 1:1:np-1
+    [infa, infb] = panelinf(xs(k), ys(k), xs(k+1), ys(k+1), Xs, Ys);
+    temp1_a = [infa zeros(np, 1)];
+    temp2_a = [temp1_a; zeros(1, np+1)];
+    temp1_b = [zeros(np, 1) infb];
+    temp2_b = [zeros(1, np+1) ; temp1_b];
+    INFA = INFA + temp2_a;
+    INFB = INFB + temp2_b;
+end
+psip = INFA + circshift(INFB, [0 1]);
+
+%{
+for i = 1:1:np%
+    for j = 1:1:np
+        [infa, infb] = panelinf(xs(j), ys(j), xs(j+1), ys(j+1), xs(i), ys(i));
+        INFL(i,j, 1) = infa;
+        INFL(i,j, 2) = infb;
+    end
 end
 
-psip = zeros(np,np+1);
+%plot(k, INFL(1,k,1))
 
-size(zeros(1, ny))
-size(infa)
-
-temp1_a = [infa zeros(nx, ny)];
-temp2_b = [temp1_a; zeros(nx+1, ny)];
-temp1_b = [zeros(1,ny) infb];
-temp2_b = [zeros(nx+1, ny) ; temp1_b];
-
-psip = temp2_a + temp2_b;
-%{
-for i = 1:1:np-1
-    for j = 1:1:np
-        if j == 1 
-            [psip(i,j), infb] = panelinf(xs(j), ys(j), xs(j+1), ys(j+1), xs(i), ys(i));
-            psip(i,np+1) = psip(i,j);
+for i = 1:1:np
+    for j = 1:1:np+1
+        if j == 1
+            psip(i,j) = INFL(i,j, 1);
+        elseif j == np+1
+            psip(i,j) = INFL(i,j-1, 2);
         else
-            [x1, y1] = panelinf(xs(j), ys(j), xs(j+1), ys(j+1), xs(i), ys(i));
-            [x2, y2] = panelinf(xs(j-1), ys(j-1), xs(j), ys(j), xs(i), ys(i));
-            psip(i,j) = x1 + y2;
+            psip(i,j) = INFL(i,j, 1) + INFL(i,j-1, 2);
+            
         end
     end
 end
 %}
-%{
-lhsmat = zeros(np+1,np+1);
-for i = [1:1:np-1]
-    for j = [1:1:np+1]
-        lhsmat(i,j)  = psip(i+1,j) - psip(i,j);
-    end
-end
-%}
-lhsmat = circshift(psip,1,0) - psip
-
-lhsmat(np,1) = 1;
-lhsmat(np+1, np+1) = 1;
+lhsmat = circshift(psip, [0 1]) - psip;
+% temp_lhsmat = [zeros(np+1, 1) lhsmat_no_bc zeros(np+1, 1)];
+% lhsmat = [zeros(1, np+3); temp_lhsmat; zeros(1, np+3)];
+lhsmat(:,1) = 0;
+lhsmat(1,:) = 0;
+lhsmat(:,np) = 0;
+lhsmat(np,:) = 0;
+lhsmat(1,1) = 1;
+lhsmat(np, np) = 1;
 
