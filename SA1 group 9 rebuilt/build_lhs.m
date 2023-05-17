@@ -1,4 +1,4 @@
-function lhsmat = build_lhs(xs,ys,np)
+function lhsmat = build_lhs(xs,ys)
 np = length(xs) - 1;
 psip = zeros(np,np+1);
 

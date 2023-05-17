@@ -14,7 +14,7 @@ xs = cos(theta);
 ys = sin(theta);
 
 alpha = 0;
-A = build_lhs(xs,ys, np);
+A = build_lhs(xs,ys);
 b = build_rhs(xs,ys,alpha);
 gam = A\b.';
 
@@ -25,6 +25,10 @@ for k = [1:1:np]
 end
 
 psipanel = zeros(nx, ny);
+for k = 1:1:np
+    [infa, infb] = panelinf(xs(k), ys(k), xs(k+1), ys(k+1), xm, ym);
+    psi = psi + g(k)*infa + g(k+1)*infb;
+end
 for k = 1:1:np
     psipanel = psipanel + psipv(xc(k), yc(k),Gamma(k),xm,ym);
 end
