@@ -6,7 +6,6 @@ function [infa, infb] = panelinf(xa, ya, xb, yb, xm, ym)
     del = norm(T);
 
     rm = cat(3,xm, ym);
-    Rm = permute(rm, [3 1 2]);
 
     dim1 = size(xm, 1);
     dim2 = size(xm, 2);

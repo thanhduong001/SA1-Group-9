@@ -1,36 +1,27 @@
-function lhsmat = build_lhs(xs,ys,np)
-np = length(xs) - 1;
-psip = zeros(np,np+1);
+function lhsmat = build_lhs(xs,ys)
+np = length(xs);
+Xs = zeros(np,np); % repmat(xs.',1,np);
+Ys = zeros(np,np); % repmat(ys,np,1);
 
-nx = 51;
-ny = 41;
-[xm, ym] = buildSpace(-2.5,2.5,-2,2,nx,ny);
-
-g = -2*ys;
-for k = 1:1:np
-    [infa, infb] = panelinf(xs(k), ys(k), xs(k+1), ys(k+1), xm, ym);
-end
-
-for i = 1:1:np-1
-    for j = 1:1:np+1
-        if j == 1
-            psip(i,j) = INFL(i,j, 1);
-        elseif j == np+1
-            psip(i,j) = INFL(i,j-1, 2);
-        else
-            psip(i,j) = INFL(i,j, 1) + INFL(i,j-1, 2);
-            
-        end
+for i = 1:1:np
+    for j = 1:1:np
+        Xs(i,j) = xs(i);
+        Ys(i,j) = ys(j);
     end
 end
 
-lhsmat = zeros(np+1,np+1);
-for i = [1:1:np-1]
-    for j = [1:1:np+1]
-        lhsmat(i,j)  = psip(i+1,j) - psip(i,j);
-    end
+INFA = zeros(np,np);
+INFB = zeros(np,np);
+for k = 1:1:np-1
+    [infa, infb] = panelinf(xs(k), ys(k), xs(k+1), ys(k+1), Xs, Ys);
+    INFA = INFA + infa;
+    INFB = INFB + infb;
 end
+psip = INFA + circshift(INFB, [0 1]);
 
-lhsmat(np,1) = 1;
-lhsmat(np+1, np+1) = 1;
+lhsmat = circshift(psip, [0 1]) - psip;
+lhsmat(1,:) = 0;
+lhsmat(np,:) = 0;
+lhsmat(1,1) = 1;
+lhsmat(np, np) = 1;
 

@@ -25,6 +25,7 @@ for i = 1:1:np%
         INFL(i,j, 2) = infb;
     end
 end
+INFL(:,:,1)
 figure(5)
 for i = [1:1:np]
     k(i) = i;

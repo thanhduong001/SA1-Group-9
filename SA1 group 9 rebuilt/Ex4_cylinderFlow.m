@@ -16,7 +16,6 @@ g = -2*ys;
 
 %freestream
 psi = ym;
-
 for k = 1:1:np
     [infa, infb] = panelinf(xs(k), ys(k), xs(k+1), ys(k+1), xm, ym);
     psi = psi + g(k)*infa + g(k+1)*infb;
