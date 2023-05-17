@@ -33,7 +33,7 @@ hold on
 plot(xs,ys)
 hold off
 
-alpha = pi/6;
+alpha = 0;
 A = build_lhs(xs,ys);
 for i = [1:1:np]
     k(i) = i;

@@ -18,13 +18,19 @@ A = build_lhs(xs,ys);
 b = build_rhs(xs,ys,alpha);
 gam = A\b.';
 
+for k = [1:1:np]
+    xc(k) = (xs(k) + xs(k+1))/2;
+    yc(k) = (ys(k) + ys(k+1))/2;
+    %Gamma(k) = ((gam(k) + gam(k+1))/2)*(2 * pi * 1/np);
+end
+
 psi = zeros(nx, ny);
 for k = 1:1:np
     [infa, infb] = panelinf(xs(k), ys(k), xs(k+1), ys(k+1), xm, ym);
-    psi = psi + gam(k)*infa + gam(k+1)*infb;
+    psi = psi + g(k)*infa + g(k+1)*infb;
 end
 
 figure(2)
 c = -1.75:0.25:1.75;
 axis([0 2 -2.5 2.5]);
-contour(xm,ym,psi,c)
+contour(xm,ym,psipanel,c)
