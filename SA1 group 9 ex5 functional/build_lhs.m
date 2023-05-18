@@ -18,14 +18,14 @@ for i = 1:1:nx
     end
 end
 
-for i = 1:1:np%
+for i = 1:1:np
     for j = 1:1:np
         [infa, infb] = panelinf(xs(j), ys(j), xs(j+1), ys(j+1), xs(i), ys(i));
         INFL(i,j, 1) = infa;
         INFL(i,j, 2) = infb;
     end
 end
-INFL(:,:,1)
+size(INFL(:,:,1))
 figure(5)
 for i = [1:1:np]
     k(i) = i;
