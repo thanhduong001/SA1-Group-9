@@ -1,53 +1,33 @@
 function lhsmat = build_lhs(xs,ys)
 np = length(xs);
-Xs = repmat(xs,np,1);
-Ys = repmat(ys.',1,np);
-g = -2*ys;
 
-INFA = zeros(np+1,np+1);
-INFB = zeros(np+1,np+1);
+INFA = zeros(np,np);
+INFB = zeros(np,np);
 for k = 1:1:np-1
-    [infa, infb] = panelinf(xs(k), ys(k), xs(k+1), ys(k+1), Xs, Ys);
-    temp1_a = [infa zeros(np, 1)];
-    temp2_a = [temp1_a; zeros(1, np+1)];
-    temp1_b = [zeros(np, 1) infb];
-    temp2_b = [zeros(1, np+1) ; temp1_b];
-    INFA = INFA + temp2_a;
-    INFB = INFB + temp2_b;
+    [infa, infb] = panelinf(xs(k), ys(k), xs(k+1), ys(k+1), xs, ys);
+    INFA(:, k) = infa.';
+    INFB(:, k) = infb.';
 end
-psip = INFA + circshift(INFB, [0 1]);
+INFB = circshift(INFB, [0 1]);
+psip = INFA + INFB;
+psip(np, :) = zeros(1, np);
 
-%{
-for i = 1:1:np%
-    for j = 1:1:np
-        [infa, infb] = panelinf(xs(j), ys(j), xs(j+1), ys(j+1), xs(i), ys(i));
-        INFL(i,j, 1) = infa;
-        INFL(i,j, 2) = infb;
-    end
-end
-
-%plot(k, INFL(1,k,1))
-
-for i = 1:1:np
-    for j = 1:1:np+1
-        if j == 1
-            psip(i,j) = INFL(i,j, 1);
-        elseif j == np+1
-            psip(i,j) = INFL(i,j-1, 2);
-        else
-            psip(i,j) = INFL(i,j, 1) + INFL(i,j-1, 2);
-            
-        end
-    end
-end
-%}
 lhsmat = circshift(psip, [0 1]) - psip;
-% temp_lhsmat = [zeros(np+1, 1) lhsmat_no_bc zeros(np+1, 1)];
-% lhsmat = [zeros(1, np+3); temp_lhsmat; zeros(1, np+3)];
-lhsmat(:,1) = 0;
 lhsmat(1,:) = 0;
-lhsmat(:,np) = 0;
-lhsmat(np,:) = 0;
 lhsmat(1,1) = 1;
+lhsmat(np,:) = 0;
 lhsmat(np, np) = 1;
+
+% %%%%%%
+
+
+% lhsmat = zeros(np+1,np+1);
+% for i = [2:1:np]
+%     for j = [1:1:np+1]
+%         lhsmat(i,j)  = psip(i,j) - psip(i-1,j);
+%     end
+% end
+% 
+% lhsmat(1,1) = 1;
+% lhsmat(np+1, np+1) = 1;
 

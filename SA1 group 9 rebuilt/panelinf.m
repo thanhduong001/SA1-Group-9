@@ -5,8 +5,6 @@ function [infa, infb] = panelinf(xa, ya, xb, yb, xm, ym)
     n = N/norm(N);
     del = norm(T);
 
-    rm = cat(3,xm, ym);
-
     dim1 = size(xm, 1);
     dim2 = size(xm, 2);
     Xm = zeros(dim1, dim2);
