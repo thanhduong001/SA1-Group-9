@@ -1,0 +1,20 @@
+Re = 2500;
+U = ones(1,101) * 5;
+duedx = ones(1,101) * + 0.2;
+x = (0:.01:1);
+ue = zeros(1,101);
+ue = U + duedx .* x;
+thetasq = zeros(1,101);
+thetaTot = zeros(1,101);
+for i = [2:101]
+    thetasq(i) = (ueintbit(x(i-1),ue(i-1),x(i),ue(i)));
+    thetasq(i) = thetasq(i-1) + (ueintbit(x(i-1),ue(i-1),x(i),ue(i)));
+    thetaBlasius(i) = 0.664/(Re ^ 0.5) * x(i) ^ 0.5;
+    m = -Re * (thetasq(i) * duedx(i))
+    H = hwaites_lookup(m)
+end
+theta = thetasq .^ 0.5;
+plot(x, theta);
+hold on
+plot(x, thetaBlasius);
+hold off
