@@ -1,5 +1,5 @@
 Re = 2500;
-n = 101
+n = 101;
 x = (0:.01:1);
 ue = ones(1,n);
 thetasq = zeros(1,n);
