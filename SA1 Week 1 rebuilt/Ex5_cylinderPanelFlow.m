@@ -18,7 +18,7 @@ A = build_lhs(xs,ys);
 b = build_rhs(xs,ys,alpha);
 gam = A\b;
 
-psi = 0;
+psi = ym;
 for k = 1:1:np
     [infa, infb] = panelinf(xs(k), ys(k), xs(k+1), ys(k+1), xm, ym);
     psi = psi + gam(k)*infa + gam(k+1)*infb;
